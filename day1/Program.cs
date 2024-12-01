@@ -1,9 +1,9 @@
-﻿var runner = new Runner();
-runner.RunPart1();
+﻿var runner = new RunnerPart1();
+runner.Run();
 
-public class Runner
+public class RunnerPart1
 {
-    public void RunPart1()
+    public void Run()
     {
         var inputFile = "input.txt";
 
