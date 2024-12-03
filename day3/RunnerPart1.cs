@@ -4,7 +4,7 @@ namespace day3;
 
 public class RunnerPart1
 {
-    private const string REGEX_TEMPLATE = "mul\\((?<num1>\\d+),(?<num2>\\d+)\\)";
+    private const string REGEX_TEMPLATE = "(?<opr>mul|don't|do)\\(((?<num1>\\d+),(?<num2>\\d+))*\\)";
 
     public void Run()
     {
@@ -20,13 +20,29 @@ public class RunnerPart1
             var line = sr.ReadLine() ?? throw new ArgumentException("bad data");
 
             var regex = new Regex(REGEX_TEMPLATE);
+            var doMultiply = true;
 
-            foreach(Match x in regex.Matches(line))
+            var matches = regex.Matches(line);
+
+            foreach (Match x in matches)
             {
-                var num1 = Int32.Parse(x.Groups["num1"].Value);
-                var num2 = Int32.Parse(x.Groups["num2"].Value);
+                var opr = x.Groups["opr"].Value;
 
-                sum += (num1* num2);
+                if (opr == "don't")
+                    doMultiply = false;
+                else if (opr == "do")
+                    doMultiply = true;
+                else if (opr == "mul" && doMultiply)
+                {
+                    int num1, num2;
+
+                    if (Int32.TryParse(x.Groups["num1"].Value, out num1)
+                        && Int32.TryParse(x.Groups["num2"].Value, out num2))
+                    {
+                        Console.WriteLine($"mul({num1},{num2})");
+                        sum += (num1 * num2);
+                    }
+                }
             }
 
         }
