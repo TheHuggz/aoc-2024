@@ -1,5 +1,5 @@
 ﻿using day4;
 
-var runner = new RunnerPart1();
+var runner = new RunnerPart2 ();
 runner.Run();
 
